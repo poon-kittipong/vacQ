@@ -9,6 +9,10 @@ const rateLimit = require("express-rate-limit");
 const hpp = require("hpp");
 const cors = require("cors");
 
+// Swagger variables.
+const swaggerJsDoc = require("swagger-jsdoc");
+const swaggerUI = require("swagger-ui-express");
+
 // Route files.
 const hospitals = require("./routes/hospitals");
 const auth = require("./routes/auth");
@@ -49,6 +53,26 @@ app.use(limiter);
 
 // Cookie parser
 app.use(cookieParser());
+
+// Swagger Options
+const swaggerOptions = {
+  swaggerDefinition: {
+    openapi: "3.0.0",
+    info: {
+      title: "Library API",
+      version: "1.0.0",
+      description: "A simple Express VacQ API",
+    },
+    servers: [
+      {
+        url: "http://localhost:5000/api/v1",
+      },
+    ],
+  },
+  apis: ["./routes/*.js"],
+};
+const swaggerDocs = swaggerJsDoc(swaggerOptions);
+app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDocs));
 
 // Mount routes
 app.use("/api/v1/hospitals", hospitals);
