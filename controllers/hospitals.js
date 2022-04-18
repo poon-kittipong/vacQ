@@ -1,5 +1,5 @@
 const Hospital = require("../models/Hospital");
-const VacCenter = require("../models/VacCenter");
+// const VacCenter = require("../models/VacCenter");
 
 /**
  * @desc    Get all hospitals
